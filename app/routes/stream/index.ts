@@ -1,5 +1,7 @@
 // import type { LoaderFunctionArgs } from "react-router";
 
+import type { LoaderFunctionArgs } from "react-router";
+
 // export const config = {
 //   runtime: "edge", // tells Vercel this should be an edge function
 // };
@@ -37,8 +39,8 @@
 
 export const config = { runtime: "edge" };
 
-export default async function loader(req: Request) {
-  const original = new URL(req.url).searchParams.get("url");
+export default async function loader({ request }: LoaderFunctionArgs) {
+  const original = new URL(request.url).searchParams.get("url");
   if (!original) return new Response("Missing URL", { status: 400 });
 
   // If request is not m3u8 (segments), just pipe
