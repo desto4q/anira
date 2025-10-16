@@ -10,6 +10,7 @@ import { usePagination } from "@/helpers/hooks";
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { MetaFunction } from "react-router";
+
 export const meta: MetaFunction = () => {
   return [
     { title: "Category: Movies" },
@@ -19,9 +20,9 @@ export const meta: MetaFunction = () => {
 export default function index() {
   const { currentPage } = usePagination();
   const query = useQuery<API_RESULTS<QUERY_RESULTS>, AxiosError>({
-    queryKey: ["category", "movies", currentPage],
+    queryKey: ["category", "tv", currentPage],
     queryFn: async () => {
-      let resp = await client.get("/movies", {
+      let resp = await client.get("/tv", {
         params: {
           page: currentPage,
         },
@@ -33,7 +34,7 @@ export default function index() {
   if (query.isLoading) {
     return (
       <MainLayout>
-        <GridLoader />
+        <GridLoader title="Category: Tv" />
       </MainLayout>
     );
   }
@@ -43,10 +44,7 @@ export default function index() {
       <BackgroundGrid />
       <div>{/*<h2 className="">category: Movies</h2>*/}</div>
       <MainLayout>
-        <GridContainer
-          title="Category: Movies"
-          totalPages={query.data.totalPages}
-        >
+        <GridContainer title="Category: Tv" totalPages={query.data.totalPages}>
           {results.map((item, _) => (
             <Card post={item} />
           ))}

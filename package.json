@@ -23,6 +23,7 @@
     "jotai": "^2.15.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.545.0",
+    "nanoid": "^5.1.6",
     "react": "^19.1.1",
     "react-all-player": "^2.0.10",
     "react-dom": "^19.1.1",

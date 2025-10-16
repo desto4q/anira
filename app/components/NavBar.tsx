@@ -11,7 +11,13 @@ export default function NavBar() {
         <div className="">
           <SearchBar />
         </div>
-        <div className="ml-auto">
+        <div className="ml-auto space-x-4">
+          <Link to={"/category/movies"} className="btn btn-neutral">
+            Movies
+          </Link>
+          <Link to={"/category/Tv"} className="btn btn-neutral">
+            Tv
+          </Link>
           <Link to={"/auth/login"} className="btn btn-primary">
             Login
           </Link>

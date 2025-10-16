@@ -5,6 +5,7 @@ import type { AxiosError } from "axios";
 import { AudioLinesIcon, Subtitles } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import SideCard from "./SideCard";
+import { nanoid } from "nanoid";
 
 export default function NewReleases() {
   const query = useQuery<API_RESULTS<QUERY_RESULTS>, AxiosError>({
@@ -23,7 +24,7 @@ export default function NewReleases() {
         <div className="gap-2  flex flex-col flex-1s">
           {arr.map((item) => {
             return (
-              <div className=" flex-1 skeleton w-full ">
+              <div className=" flex-1 skeleton w-full " key={nanoid(10)}>
                 <div className="h-[90px]"></div>
               </div>
             );
@@ -55,7 +56,7 @@ export default function NewReleases() {
 
       <div className="space-y-4 ">
         {items.map((item) => (
-          <SideCard item={item} />
+          <SideCard item={item} key={"new_release" + item.id} />
         ))}
       </div>
     </div>
