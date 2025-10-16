@@ -7,13 +7,26 @@ import videojs from "video.js";
 import "@videojs/http-streaming";
 import "video.js/dist/video-js.css";
 import "videojs-hls-quality-selector/src/plugin";
+import "video.js/dist/video-js.css";
+
+// City
+import "@videojs/themes/dist/city/index.css";
+
+// Fantasy
+import "@videojs/themes/dist/fantasy/index.css";
+
+// Forest
+import "@videojs/themes/dist/forest/index.css";
+
+// Sea
+import "@videojs/themes/dist/sea/index.css";
 import DownloadLinks from "./DownloadLinks";
 
 export default function SimplePlayer() {
   const { id, episode } = useParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<any>(null);
-
+  window.VIDEOJS_NO_DYNAMIC_STYLE = true;
   const episode_link = id + "$episode$" + episode;
   const query = useQuery<STREAM_RESPONSE>({
     queryKey: ["episode", episode_link],
@@ -39,7 +52,8 @@ export default function SimplePlayer() {
     if (!playerRef.current) {
       // Create video element programmatically
       const videoElement = document.createElement("video");
-      videoElement.className = "video-js vjs-default-skin w-full h-full";
+      videoElement.className =
+        "video-js !w-full !h-full vjs-theme-fantasy w-full ";
       containerRef.current.appendChild(videoElement);
 
       playerRef.current = videojs(videoElement, {
@@ -109,7 +123,9 @@ export default function SimplePlayer() {
 
   return (
     <div className="flex-1">
-      <div className="aspect-video" ref={containerRef}></div>
+      <div className="flex w-full aspect-video">
+        <div className="flex-1 w-full aspect-video" ref={containerRef}></div>
+      </div>
       <DownloadLinks data={stream} />
     </div>
   );

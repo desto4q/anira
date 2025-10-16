@@ -1,9 +1,10 @@
 import type { QUERY_RESULTS } from "@/constants";
+import { Mic, SubtitlesIcon } from "lucide-react";
 import { Link } from "react-router";
 
 export default function Card({ post }: { post: QUERY_RESULTS }) {
-  const type =
-    post.type === "Movie" || post.type === "Special" ? "movie" : "tv";
+  const type = "tv";
+  // post.type === "Movie" || post.type === "Special" ? "movie" : "tv";
   const link = `/${type}/${post.id}/info`;
 
   return (
@@ -29,14 +30,20 @@ export default function Card({ post }: { post: QUERY_RESULTS }) {
           <h2 className="card-title text-sm font-semibold line-clamp-2 h-[2lh]">
             {post.title}
           </h2>
+          {/*<p>{post.nsfw && <>true</>}</p>*/}
           <div className="mt-auto flex items-center justify-between pt-2 text-xs text-base-content/70">
             <span>{post.duration || `${post.episodes} eps`}</span>
             <div className="flex gap-2">
               {post.sub > 0 && (
-                <div className="badge badge-outline badge-xs">SUB</div>
+                <div className="badge badge-primary badge-soft">
+                  Sub
+                  {/*<SubtitlesIcon></SubtitlesIcon>*/}
+                </div>
               )}
               {post.dub > 0 && (
-                <div className="badge badge-outline badge-xs">DUB</div>
+                <div className="badge badge-accent badge-soft">
+                  {/*<Mic />*/}Dub
+                </div>
               )}
             </div>
           </div>
