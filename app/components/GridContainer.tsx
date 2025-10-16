@@ -10,7 +10,7 @@ interface GridContainerProps {
 
 export default function GridContainer(props: GridContainerProps) {
   return (
-    <div className="">
+    <div className="px-3 md:px-0">
       <div className="flex items-center ">
         {props?.title?.trim() && (
           <h2 className="text-xl font-bold">{props.title}</h2>
@@ -21,7 +21,7 @@ export default function GridContainer(props: GridContainerProps) {
           </div>
         )}
       </div>
-      <section className="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <section className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2">
         {props.children}
       </section>
       <div className="mt-8 mb-20 grid place-items-center">

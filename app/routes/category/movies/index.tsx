@@ -6,14 +6,20 @@ import GridLoader from "@/components/GridLoader";
 import MainLayout from "@/components/layouts/MainLayout";
 import SimpleContainer from "@/components/SimpleContainer";
 import type { API_RESULTS, QUERY_RESULTS } from "@/constants";
+import { usePagination } from "@/helpers/hooks";
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 
 export default function index() {
+  const { currentPage } = usePagination();
   const query = useQuery<API_RESULTS<QUERY_RESULTS>, AxiosError>({
-    queryKey: ["category", "movies"],
+    queryKey: ["category", "movies", currentPage],
     queryFn: async () => {
-      let resp = await client.get("/movies");
+      let resp = await client.get("/movies", {
+        params: {
+          page: currentPage,
+        },
+      });
       return resp.data;
     },
   });
@@ -21,7 +27,7 @@ export default function index() {
   if (query.isLoading) {
     return (
       <MainLayout>
-        <GridLoader />
+        <GridLoader totalPages={query.data?.totalPages} />
       </MainLayout>
     );
   }
@@ -31,7 +37,10 @@ export default function index() {
       <BackgroundGrid />
       <div>{/*<h2 className="">category: Movies</h2>*/}</div>
       <MainLayout>
-        <GridContainer title="Category: Movies">
+        <GridContainer
+          title="Category: Movies"
+          totalPages={query.data.totalPages}
+        >
           {results.map((item, _) => (
             <Card post={item} />
           ))}

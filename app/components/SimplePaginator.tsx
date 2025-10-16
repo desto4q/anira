@@ -12,6 +12,7 @@ export default function SimplePaginator({ totalPage }: { totalPage?: number }) {
   });
   useEffect(() => {
     if (currentPage) setValue("page", currentPage);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll to top on page change
   }, [currentPage]);
 
   const onSubmit = (data: { page: number }) => {

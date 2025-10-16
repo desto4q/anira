@@ -10,7 +10,7 @@ interface GridContainerProps {
 }
 
 export default function GridLoader(props: GridContainerProps) {
-  const arr = Array.from({ length: 20 }).fill(null);
+  const arr = Array.from({ length: 40 }).fill(null);
   return (
     <div className="">
       <div className="flex items-center ">
@@ -23,7 +23,7 @@ export default function GridLoader(props: GridContainerProps) {
           </div>
         )}
       </div>
-      <section className="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <section className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2">
         {arr.map((_, index) => (
           <SkeletonCard />
         ))}

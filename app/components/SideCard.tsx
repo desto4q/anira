@@ -1,10 +1,16 @@
 import type { QUERY_RESULTS } from "@/constants";
 import { AudioLinesIcon, Subtitles } from "lucide-react";
+import { Link } from "react-router";
 
 export default function SideCard({ item }: { item: QUERY_RESULTS }) {
+  const type = "tv";
+  // post.type === "Movie" || post.type === "Special" ? "movie" : "tv";
+  const link = `/${type}/${item.id}/info`;
+
   return (
     <div>
-      <div
+      <Link
+        to={link}
         key={item.id}
         className="flex bg-base-100 shadow-xl hover:shadow-2xl transition duration-200"
       >
@@ -42,7 +48,7 @@ export default function SideCard({ item }: { item: QUERY_RESULTS }) {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }
