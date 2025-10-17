@@ -150,12 +150,13 @@ export default function Hero() {
                           {item.releaseDate}
                         </span>
                         <span className="join">
-                          <span className="badge join-item badge-primary">
-                            <SubtitlesIcon className="size-4 md:size-auto" />
-                            {item.sub}
+                          <span className="badge join-item badge-primary badge-soft">
+                            {/*<SubtitlesIcon className="size-4 md:size-auto" />*/}
+                            Sub:{item.sub}
                           </span>
-                          <span className="badge join-item badge-accent">
-                            <Mic2Icon className="size-4 md:size-auto" />
+                          <span className="badge join-item badge-accent badge-soft">
+                            Dub:
+                            {/*<Mic2Icon className="size-4 md:size-auto" />*/}
                             {item.dub}
                           </span>
                         </span>
