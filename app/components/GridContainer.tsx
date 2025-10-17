@@ -21,7 +21,7 @@ export default function GridContainer(props: GridContainerProps) {
           </div>
         )}
       </div>
-      <section className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2">
+      <section className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))]  md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2">
         {props.children}
       </section>
       <div className="mt-8 mb-20 grid place-items-center">
