@@ -34,11 +34,11 @@ export default function index() {
       <div className="h-[250px] bg-base-200 relative">
         <img
           src={tv_data?.image}
-          className="size-full object-cover"
+          className="size-full object-cover "
           loading="lazy"
           alt=""
         />
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-base-100"></div>
+        <div className="absolute top-0 left-0 w-full backdrop-blur-sm h-full bg-gradient-to-t from-base-100"></div>
       </div>
       <TvInfo info={tv_data} />
     </>
