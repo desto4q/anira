@@ -26,7 +26,7 @@ export default function SimplePlayer() {
   const { id, episode } = useParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<any>(null);
-  window.VIDEOJS_NO_DYNAMIC_STYLE = true;
+  (window as any).VIDEOJS_NO_DYNAMIC_STYLE = true;
   const episode_link = id + "$episode$" + episode;
   const query = useQuery<STREAM_RESPONSE>({
     queryKey: ["episode", episode_link],
@@ -49,6 +49,27 @@ export default function SimplePlayer() {
     const hlsSource =
       stream.sources.find((source) => source.isM3U8) || stream.sources[0];
 
+    const videoJsOptions: videojs.PlayerOptions = {
+      autoplay: false,
+      controls: true,
+      fluid: true,
+      responsive: true,
+      preload: "auto",
+      sources: [
+        {
+          src: `/stream?url=${encodeURIComponent(hlsSource.url)}`,
+          type: "application/x-mpegURL",
+        },
+      ],
+      tracks: stream.subtitles?.map((subtitle) => ({
+        src: `${subtitle.url}`,
+        kind: "captions",
+        srclang: subtitle.lang,
+        label: subtitle.lang,
+        default: subtitle.lang === "English", // Set English as default if available
+      })),
+    };
+
     if (!playerRef.current) {
       // Create video element programmatically
       const videoElement = document.createElement("video");
@@ -56,19 +77,7 @@ export default function SimplePlayer() {
         "video-js !w-full !h-full vjs-theme-fantasy w-full ";
       containerRef.current.appendChild(videoElement);
 
-      playerRef.current = videojs(videoElement, {
-        autoplay: false,
-        controls: true,
-        fluid: true,
-        responsive: true,
-        preload: "auto",
-        sources: [
-          {
-            src: `/stream?url=${encodeURIComponent(hlsSource.url)}`,
-            type: "application/x-mpegURL",
-          },
-        ],
-      });
+      playerRef.current = videojs(videoElement, videoJsOptions);
 
       // Enable quality selector plugin
       playerRef.current.ready(() => {
@@ -84,6 +93,23 @@ export default function SimplePlayer() {
         src: hlsSource.url,
         type: "application/x-mpegURL",
       });
+
+      // Update subtitles if player already exists
+      if (stream.subtitles) {
+        player.removeRemoteTextTracks(); // Clear existing tracks
+        stream.subtitles.forEach((subtitle) => {
+          player.addRemoteTextTrack(
+            {
+              src: `/stream?url=${encodeURIComponent(subtitle.url)}`,
+              kind: "captions",
+              srclang: subtitle.lang,
+              label: subtitle.lang,
+              default: subtitle.lang === "English",
+            },
+            true,
+          );
+        });
+      }
     }
 
     return () => {
