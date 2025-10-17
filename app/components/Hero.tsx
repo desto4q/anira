@@ -152,10 +152,10 @@ export default function Hero() {
                         <span className="join">
                           <span className="badge join-item badge-primary badge-soft">
                             {/*<SubtitlesIcon className="size-4 md:size-auto" />*/}
-                            Sub:{item.sub}
+                            Sub: {item.sub}
                           </span>
                           <span className="badge join-item badge-accent badge-soft">
-                            Dub:
+                            Dub:{" "}
                             {/*<Mic2Icon className="size-4 md:size-auto" />*/}
                             {item.dub}
                           </span>
