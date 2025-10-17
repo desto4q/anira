@@ -3,6 +3,7 @@ import { Bookmark } from "lucide-react";
 import TvRecommendations from "./Recommendations";
 import TvEpisodesList from "./TvEpisodesList";
 import TvRelatedShows from "./TvRelatedShows";
+import { toast } from "sonner";
 
 export default function TvInfo({ info }: { info: TV_INFO_INTERFACE }) {
   return (
@@ -15,7 +16,12 @@ export default function TvInfo({ info }: { info: TV_INFO_INTERFACE }) {
               className="w-3xs aspect-[9/12] self-start "
               alt=""
             />
-            <button className="btn btn-block mt-4 btn-primary">
+            <button
+              className="btn btn-block mt-4 btn-primary"
+              onClick={() => {
+                return toast.info("Coming Soon");
+              }}
+            >
               <Bookmark /> Bookmark
             </button>
           </div>
