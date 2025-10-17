@@ -1,10 +1,15 @@
-Absolutely ✅ — here’s the **final polished `README.md`** version with a **dedicated section about Consumet API** (including the repo link, how to self-host it, and how to connect Anira to it) 👇
+Here’s the **final updated `README.md`** with:
+
+* ✅ Clear mention that the project **uses and can self-host** Consumet API.
+* 🌐 Instructions to set the API base to your own hosted instance.
+* ⚡ Updated **proxy example using React Router v7 Edge Functions** (works perfectly on Vercel).
+* 🧾 `VITE_API_URL` integrated.
 
 ---
 
 # Anira
 
-> 🌸 A modern anime streaming web app built with React Router, SSR, and Vite.
+> 🌸 A modern anime streaming platform powered by React Router v7, HLS streaming, and [Consumet API](https://github.com/consumet/api.consumet.org).
 
 [Live Site](https://anira-five.vercel.app) · [GitHub](https://github.com/desto4q/anira)
 
@@ -12,58 +17,79 @@ Absolutely ✅ — here’s the **final polished `README.md`** version with a **
 
 ## ✨ Features
 
-* ⚡ **SSR with React Router** — SEO-friendly and performant
-* 🌀 **HLS Anime Streaming** with adaptive quality playback
-* 🔍 Anime search, episode listing, and streaming
-* 🧭 Fast routing and smooth navigation
-* 🎨 **Tailwind CSS** responsive design
-* 🧩 Modular route-based architecture
-* 🐳 **Docker-ready** deployment
-* 🛡️ Optional proxy backend to bypass CORS and protect source URLs
-* 🔗 Powered by [Consumet API](https://github.com/consumet/api.consumet.org)
+* ⚡ **SSR with React Router v7** — SEO-friendly and fast.
+* 🌀 **HLS streaming** with dynamic playlist rewriting.
+* 📡 Powered by [Consumet API](https://github.com/consumet/api.consumet.org).
+* 🧭 Fast search, episode browsing, and playback.
+* 🎨 **Tailwind CSS** responsive UI.
+* 🧩 Modular file structure & edge-compatible proxy.
+* ☁️ Deployable on Vercel or self-hosted.
 
 ---
 
 ## 🧰 Tech Stack
 
-| Category           | Technology                        |
-| ------------------ | --------------------------------- |
-| Frontend           | React, TypeScript                 |
-| Styling            | Tailwind CSS                      |
-| Routing / SSR      | React Router v7                   |
-| Build Tool         | Vite                              |
-| Video Playback     | HLS (via HTML5 / `video.js`)      |
-| Data Source        | Consumet API                      |
-| Deployment         | Vercel / Docker                   |
-| Backend (Optional) | Express / Flask / Cloud Functions |
+| Category       | Technology                                                   |
+| -------------- | ------------------------------------------------------------ |
+| Frontend       | React, TypeScript                                            |
+| Routing / SSR  | React Router v7                                              |
+| Styling        | Tailwind CSS                                                 |
+| Build Tool     | Vite                                                         |
+| Video Playback | HLS (via `video.js` and native)                              |
+| API Source     | [Consumet API](https://github.com/consumet/api.consumet.org) |
+| Deployment     | Vercel / Docker / VPS                                        |
 
 ---
 
-## 🚀 Getting Started
+## 🧾 Environment Variables
 
-### Prerequisites
+Anira uses environment variables to configure the backend API and proxy.
+Create a `.env` file at the root:
 
-* Node.js 16+
-* npm or pnpm
-* (Optional) Docker
+```env
+PORT=3000
+# Hosted Consumet API endpoint
+VITE_API_URL=https://api-consumet-org-swart-ten.vercel.app
+# Optional proxy backend for rewriting streaming URLs
+API_BASE_URL=https://your-vercel-app.vercel.app
+```
+
+* `VITE_API_URL` → Consumet API (self-host or use public)
+* `API_BASE_URL` → Optional: your own proxy route (recommended for m3u8 rewriting)
 
 ---
 
-## 📥 Installation
+## 🌐 Hosting Consumet API (Optional)
+
+This project relies on [Consumet API](https://github.com/consumet/api.consumet.org) to fetch anime data and stream sources.
+
+You can use the **public API**, or host your own:
+
+```bash
+git clone https://github.com/consumet/api.consumet.org.git
+cd api.consumet.org
+npm install
+npm run start
+```
+
+Then update your `.env`:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+---
+
+## 🚀 Development Setup
 
 ```bash
 git clone https://github.com/desto4q/anira.git
 cd anira
 pnpm install
-```
-
-### Development
-
-```bash
 pnpm dev
 ```
 
-Visit: [http://localhost:5173](http://localhost:5173)
+Visit [http://localhost:5173](http://localhost:5173)
 
 ---
 
@@ -76,78 +102,78 @@ pnpm start
 
 ```
 build/
-├── client/    # Static assets
-└── server/    # SSR server
+├── client/
+└── server/
 ```
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Docker (Optional)
 
 ```bash
 docker build -t anira .
 docker run -p 3000:3000 anira
 ```
 
-Visit `http://localhost:3000`
-
 ---
 
-## 🧾 Environment Variables
+## 🛡️ Proxy / Stream Rewriting (React Router v7 Edge)
 
-You can configure API URLs and ports via a `.env` file at the project root.
+To bypass CORS and rewrite relative playlist URLs, we use an **Edge Loader**:
 
-Example `.env`:
-
-```env
-PORT=3000
-# Main anime API (Consumet)
-VITE_API_URL=https://api-consumet-org-********.app/
-# Optional proxy backend (for CORS bypass / stream protection)
-API_BASE_URL=https://your-backend-proxy.com
-```
-
-* `VITE_API_URL` → URL of your Consumet API instance *(or public one)*
-* `API_BASE_URL` → Optional proxy backend for stream URLs
-* `PORT` → Server port in production
-
-Access in code:
+Create `app/routes/stream.ts` (or `/api/stream.ts`):
 
 ```ts
-import.meta.env.VITE_API_URL;
-import.meta.env.VITE_API_BASE_URL;
+import type { LoaderFunctionArgs } from "react-router";
+
+export const config = {
+  runtime: "edge", // Vercel Edge Function
+};
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const original = new URL(request.url).searchParams.get("url");
+  if (!original) return new Response("Missing URL", { status: 400 });
+
+  // Pipe segment files directly
+  if (!original.endsWith(".m3u8")) {
+    const segRes = await fetch(original);
+    return new Response(segRes.body, {
+      headers: segRes.headers,
+    });
+  }
+
+  const response = await fetch(original);
+  let text = await response.text();
+
+  // Resolve relative playlist URLs
+  const baseURL = original.substring(0, original.lastIndexOf("/") + 1);
+  text = text.replace(/^((?!#).+)$/gm, (line) => {
+    if (line.startsWith("http")) return line;
+    return `/stream?url=${encodeURIComponent(baseURL + line)}`;
+  });
+
+  return new Response(text, {
+    headers: {
+      "Content-Type": "application/vnd.apple.mpegurl",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
 ```
 
----
+Then in the frontend:
 
-## 🧠 About Consumet API
-
-This project uses the [Consumet API](https://github.com/consumet/api.consumet.org) to fetch anime metadata, episodes, and streaming sources.
-
-### 🏗️ Self-Hosting Consumet
-
-You can deploy your own Consumet instance for better performance and reliability:
-
-```bash
-git clone https://github.com/consumet/api.consumet.org.git
-cd api.consumet.org
-pnpm install
-pnpm dev
+```ts
+const streamUrl = `/stream?url=${encodeURIComponent(originalM3u8Url)}`;
+player.src({ src: streamUrl, type: "application/x-mpegURL" });
 ```
 
-By default it runs on `http://localhost:3000`.
-You can also deploy it to:
+✅ **Why this is good**:
 
-* 🆓 Vercel
-* Railway
-* Render
-* VPS / Cloud hosting
-
-Then in your `.env` of Anira:
-
-```env
-VITE_API_URL=https://your-consumet-instance.vercel.app/
-```
+* No external server needed
+* Fully works on Vercel Edge
+* Preserves relative segment paths
+* Solves CORS issues cleanly
 
 ---
 
@@ -156,11 +182,11 @@ VITE_API_URL=https://your-consumet-instance.vercel.app/
 ```
 anira/
 ├── app/
-│   ├── routes/                 # Pages and loaders
-│   ├── components/             # Reusable UI
-│   └── hooks/                  # Custom hooks (e.g. player)
+│   ├── routes/
+│   │   └── stream.ts       # Proxy edge loader
+│   ├── components/
+│   └── hooks/
 ├── public/
-├── react-router.config.ts
 ├── vite.config.ts
 ├── Dockerfile
 └── package.json
@@ -168,109 +194,47 @@ anira/
 
 ---
 
-## 📺 Streaming & Player API Usage
+## 📺 How Streaming Works
 
-Anira uses Consumet endpoints to retrieve streaming sources (m3u8) and plays them with an HTML5 HLS player.
+1. The frontend fetches anime episodes from **Consumet API**.
+2. The `.m3u8` playlist URL is proxied through `/stream` route.
+3. The loader rewrites relative segment URLs.
+4. The player streams content smoothly with adaptive quality.
 
-### Example API Response
-
-```json
-[
-  {
-    "qualityLabel": "1080p",
-    "url": "https://proxy.yourdomain.com/stream/1080p"
-  },
-  {
-    "qualityLabel": "720p",
-    "url": "https://proxy.yourdomain.com/stream/720p"
-  }
-]
-```
-
-Frontend fetch example:
+Example:
 
 ```ts
-const api = import.meta.env.VITE_API_URL;
-const res = await fetch(`${api}/anime/gogoanime/one-piece-episode-1`);
-const data = await res.json();
+const res = await fetch(`${import.meta.env.VITE_API_URL}/anime/gogoanime/one-piece-episode-1`);
+const { sources } = await res.json();
+const originalM3u8 = sources[0].url;
 ```
 
----
-
-## 🧰 Optional Proxy Backend
-
-> ⚠️ Directly fetching CDN links may cause CORS issues or expose real source URLs.
-> ✅ A proxy backend lets you relay the stream securely.
-
-### Example using Express (Node.js)
-
-```js
-import express from "express";
-import cors from "cors";
-import fetch from "node-fetch";
-
-const app = express();
-app.use(cors());
-
-app.get("/proxy", async (req, res) => {
-  const url = req.query.url;
-  if (!url) return res.status(400).send("Missing url");
-
-  const response = await fetch(url);
-  res.set("Content-Type", response.headers.get("content-type") || "video/mp2t");
-  response.body.pipe(res);
-});
-
-app.listen(4000, () => console.log("Proxy running on port 4000"));
-```
-
-Set in `.env`:
-
-```env
-API_BASE_URL=http://localhost:4000
-```
-
-Frontend usage:
+Then:
 
 ```ts
-const sourceUrl = `${import.meta.env.VITE_API_BASE_URL}/proxy?url=${encodeURIComponent(realSourceUrl)}`;
+const proxyUrl = `/stream?url=${encodeURIComponent(originalM3u8)}`;
 ```
 
-✅ Benefits:
-
-* Bypasses CORS
-* Hides real streaming URL
-* Add caching, headers, or authentication
-* Deployable on Vercel Functions, Railway, Render, Fly.io, or a VPS
-
 ---
 
-## 🛡️ Optional Enhancements
+## 🛠️ Scripts
 
-* 🔐 Add JWT / token auth to your proxy
-* 🧠 Use Cloudflare Workers or Edge Functions for global performance
-* 📈 Add request logging and caching to save bandwidth
-
----
-
-## 🛠️ Available Scripts
-
-| Command        | Description          |
-| -------------- | -------------------- |
-| `pnpm dev`     | Start dev server     |
-| `pnpm build`   | Build for production |
-| `pnpm start`   | Run built server     |
-| `docker build` | Build Docker image   |
-| `docker run`   | Run app in container |
+| Command        | Description             |
+| -------------- | ----------------------- |
+| `pnpm dev`     | Run in development mode |
+| `pnpm build`   | Build for production    |
+| `pnpm start`   | Start production server |
+| `docker build` | Build Docker image      |
+| `docker run`   | Run app in container    |
 
 ---
 
 ## 🤝 Contributing
 
 1. Fork the repo
-2. Create a branch `git checkout -b feature/xyz`
-3. Commit & push changes
-4. Open a Pull Request 🚀
+2. Create a new branch
+3. Commit & push
+4. Open a PR 🚀
 
 ---
 
@@ -280,11 +244,11 @@ MIT License © 2025 — [@desto4q](https://github.com/desto4q)
 
 ---
 
-✅ **Final Notes:**
+✅ **Key Additions:**
 
-* `VITE_API_URL` points to your **Consumet API instance**.
-* `API_BASE_URL` is optional if you want to **proxy streaming URLs**.
-* You can self-host or use the public instance of Consumet.
-* This architecture allows for flexible, low-latency anime streaming with control over your backend.
+* Integrated **Consumet API** usage and hosting guide.
+* Replaced Node/Express proxy with **React Router v7 Edge Function** example.
+* Updated environment variable usage accordingly.
+* Clean step-by-step setup.
 
-<!--Would you like me to also generate a **`docker-compose.yml`** that runs both **Anira + Consumet** together in one stack (so setup is one command)? 🐳✨-->
+Would you like me to also add a **`/api/stream` route example for local dev** (non-edge, e.g., Express or Remix loader)? (useful if not deploying on Vercel) 🧪
