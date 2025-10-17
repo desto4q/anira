@@ -114,57 +114,61 @@ export default function Hero() {
                 return (
                   <div
                     key={index}
-                    className="embla__slide  flex   flex-1 relative"
+                    className="embla__slide flex flex-1 relative flex-col md:flex-row"
                   >
-                    <div className="flex-1 flex  relative">
-                      <div className="bg-gradient-to-t from-base-100 to-base-100 via-base-200/20 absolute size-full"></div>
+                    <div className="flex-1 flex relative h-1/2 md:h-full">
+                      <div className="bg-gradient-to-t from-base-100 to-base-100 via-base-200/20 absolute size-full md:bg-gradient-to-r"></div>
                       <img
                         loading="lazy"
                         src={item.banner}
-                        className="object-cover flex-1  "
+                        className="object-cover flex-1"
                         alt=""
                       />
                     </div>
-                    <div className="absolute bottom-0 h-full w-full max-w-3xl pb-12 bg-gradient-to-r via-base-200 from-base-200  p-4 space-y-6 pl-12 grid place-content-end-safe via-70%">
-                      <p className="text-xl font-bold text-primary">
+                    <div className="absolute bottom-0 h-1/2 md:h-full w-full md:max-w-3xl pb-12 bg-gradient-to-t via-base-200 from-base-200 p-4 space-y-3 md:space-y-6 md:pl-12 grid place-content-end-safe via-70% md:bg-gradient-to-r">
+                      <p className="text-sm md:text-xl font-bold text-primary">
                         Spotlight #{item.rank}
                       </p>
-                      <h2 className="text-4xl font-bold">{item.title}</h2>
-                      <div className=" flex gap-4">
-                        <span className="flex gap-2 items-center">
-                          <PlayIcon />
+                      <h2 className="text-2xl md:text-4xl font-bold">
+                        {item.title}
+                      </h2>
+                      <div className="flex flex-wrap gap-2 md:gap-4 text-sm md:text-base">
+                        <span className="flex gap-1 md:gap-2 items-center">
+                          <PlayIcon className="size-4 md:size-auto" />
                           {item.type}
                         </span>
-                        <span className="flex gap-2 items-center">
+                        <span className="flex gap-1 md:gap-2 items-center">
                           {" "}
-                          <TimerIcon />
+                          <TimerIcon className="size-4 md:size-auto" />
                           {item.duration}
                         </span>
                         <span className="badge badge-accent badge-soft">
                           {item.quality}
                         </span>
-                        <span className="flex gap-2 items-center">
-                          <Calendar1Icon />
+                        <span className="flex gap-1 md:gap-2 items-center">
+                          <Calendar1Icon className="size-4 md:size-auto" />
                           {item.releaseDate}
                         </span>
                         <span className="join">
                           <span className="badge join-item badge-primary">
-                            <SubtitlesIcon />
+                            <SubtitlesIcon className="size-4 md:size-auto" />
                             {item.sub}
                           </span>
                           <span className="badge join-item badge-accent">
-                            <Mic2Icon />
+                            <Mic2Icon className="size-4 md:size-auto" />
                             {item.dub}
                           </span>
                         </span>
                       </div>
-                      <p className=" line-clamp-3 overflow-ellipsis">
+                      <p className="line-clamp-2 md:line-clamp-3 overflow-ellipsis text-sm md:text-base">
                         {item.description}
                       </p>
 
-                      <div className="space-x-2">
-                        <button className="btn btn-primary">Watch Now</button>
-                        <button className="btn btn-soft btn-accent">
+                      <div className="space-x-1 md:space-x-2">
+                        <button className="btn btn-primary btn-sm md:btn-md">
+                          Watch Now
+                        </button>
+                        <button className="btn btn-soft btn-accent btn-sm md:btn-md">
                           View Details
                         </button>
                       </div>
