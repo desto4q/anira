@@ -12,7 +12,7 @@ export default function SideCard({ item }: { item: QUERY_RESULTS }) {
       <Link
         to={link}
         key={item.id}
-        className="flex bg-base-100 shadow-xl hover:shadow-2xl transition duration-200"
+        className="flex bg-base-100 rounded-md shadow-xl hover:shadow-2xl transition duration-200"
       >
         <figure className="flex-1 max-w-20 min-w-20 aspect-[9/12] flex-shrink-0">
           <img
