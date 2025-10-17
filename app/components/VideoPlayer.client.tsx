@@ -48,7 +48,7 @@ export default function SimplePlayer() {
     // Find the highest quality HLS source
     const hlsSource =
       stream.sources.find((source) => source.isM3U8) || stream.sources[0];
-
+    //@ts-ignore
     const videoJsOptions: videojs.PlayerOptions = {
       autoplay: false,
       controls: true,

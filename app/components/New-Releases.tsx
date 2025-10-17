@@ -19,7 +19,7 @@ export default function NewReleases() {
   const arr = Array.from({ length: 10 }).fill(null);
   if (query.isLoading) {
     return (
-      <div className="w-xs space-y-4 p-4 rounded-md flex flex-col">
+      <div className="w-xs space-y-4 p-4 rounded-md flex flex-col ">
         <h2 className="text-xl font-bold mb-4">New Releases</h2>
         <div className="gap-2  flex flex-col flex-1s">
           {arr.map((item) => {
@@ -51,7 +51,7 @@ export default function NewReleases() {
   }
   const items = query.data.results;
   return (
-    <div className="w-xs space-y-4 p-4 rounded-md">
+    <div className="w-xs space-y-4 p-4 ">
       <h2 className="text-xl font-bold mb-4">New Releases</h2>
 
       <div className="space-y-4 ">

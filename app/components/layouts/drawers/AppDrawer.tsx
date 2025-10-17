@@ -11,14 +11,14 @@ export default function AppDrawer() {
     return;
   };
   return (
-    <div className="bg-base-200 min-h-full w-80">
+    <div className="bg-base-200 min-h-full w-80 flex flex-col">
       <div className="h-16 flex items-center px-4">
         <Link onClick={onClick} to={"/"} className="text-xl font-bold">
           AniRaa
         </Link>
       </div>
-      <div className=" ">
-        <ul className="menu w-full ">
+      <div className=" flex-1 flex">
+        <ul className="menu w-full border-t flex-1 border-current/10 bg-base-300 ">
           <li>
             <h2 className="menu-title">Links</h2>
             <ul className="space-y-2">
