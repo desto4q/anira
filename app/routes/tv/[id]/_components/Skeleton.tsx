@@ -12,7 +12,7 @@ export default function TvSkeleton() {
       </div>
       <div className="flex gap-2 min-h-dvh container mx-auto">
         <div className="skeleton flex-1"></div>
-        <div className="skeleton flex-1 max-w-xs"></div>
+        <div className="skeleton flex-1 max-w-xs hidden lg:block"></div>
       </div>
     </>
   );

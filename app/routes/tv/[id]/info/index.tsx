@@ -31,7 +31,7 @@ export default function index() {
   // const scaled = scale_up_img(tv_data.image)
   return (
     <>
-      <div className="h-[250px] bg-base-200 relative">
+      <div className="h-[150px] bg-base-200 relative">
         <img
           src={tv_data?.image}
           className="size-full object-cover "

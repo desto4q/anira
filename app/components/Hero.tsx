@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import BackgroundGrid from "./BackgrounGrid";
 import Autoplay from "embla-carousel-autoplay";
+import { Link } from "react-router";
 
 interface RESULTS extends API_RESULTS<SPOTLIGHT_RESULT> {}
 
@@ -149,12 +150,15 @@ export default function Hero() {
                       </p>
 
                       <div className="space-x-1 md:space-x-2">
-                        <button className="btn btn-primary btn-sm md:btn-md">
+                        <Link
+                          to={"/tv/" + item.id + "/info"}
+                          className="btn btn-primary btn-sm md:btn-md"
+                        >
                           Watch Now
-                        </button>
-                        <button className="btn btn-soft btn-accent btn-sm md:btn-md">
+                        </Link>
+                        {/*<button className="btn btn-soft btn-accent btn-sm md:btn-md">
                           View Details
-                        </button>
+                        </button>*/}
                       </div>
                     </div>
                   </div>

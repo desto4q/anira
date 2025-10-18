@@ -13,6 +13,8 @@ import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NavBar from "./components/NavBar";
 import AppLayout from "./components/layouts/AppLayout";
+import Footer from "./components/Footer";
+import DonationDialog from "./components/DonationDialog";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -45,6 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
+          <DonationDialog />
           <AppLayout>
             <NavBar />
             <Toaster position="top-right" richColors theme="dark" />
@@ -52,6 +55,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <ScrollRestoration />
             <Scripts />
           </AppLayout>
+          <Footer />
         </QueryClientProvider>
       </body>
     </html>

@@ -25,9 +25,9 @@ export default function TvEpisodesList({
   const nav = useNavigate();
 
   return (
-    <div className="mt-4 bg-base-200 p-4 rounded-md">
-      <h2>Episodes</h2>
-      <div className="p-2 grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2">
+    <div className="mt-4 space-y-4 bg-base-200 p-4 rounded-md">
+      <h2 className="text-lg ">Episodes</h2>
+      <div className="grid grid-cols-[repeat(auto-fit,100px)] justify-evenly gap-2">
         {currentEpisodes.map((episode) => {
           if (episode.number === parseInt(number)) {
             return (
@@ -72,7 +72,9 @@ export default function TvEpisodesList({
 
       {totalPages > 1 && (
         <div className="flex justify-center mt-4">
-          <div className="join">
+          <div className="join flex-wrap">
+            {" "}
+            {/* Added flex-wrap for responsiveness */}
             <button
               className="join-item btn"
               disabled={currentPage === 1}
