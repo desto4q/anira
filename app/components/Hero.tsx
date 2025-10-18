@@ -80,14 +80,19 @@ export default function Hero() {
   if (query.isError || !trending_items || trending_items.length === 0) {
     return (
       <div className="bg-base-200 place-items-center grid h-screen">
-        <div className="text-error">Failed to load trending items.</div>
+        <div className="flex flex-col items-center  gap-2">
+          <div className="text-error">Failed to load Spotlight.</div>
+          <button className="btn btn-primary" onClick={() => query.refetch()}>
+            Retry
+          </button>
+        </div>
       </div>
     );
   }
   const current_item = trending_items[selectedIndex];
 
   return (
-    <div className=" flex px-3 md:px-0  h-[calc(100dvh-100px)]">
+    <div className=" flex px-3 md:px-0  h-[calc(100dvh-80px)]">
       <div className=" mx-auto flex flex-1  rounded-md isolate  ">
         <BackgroundGrid />
         <div className="relative flex-1  flex">
@@ -106,7 +111,7 @@ export default function Hero() {
             </button>
           </div>
           <section
-            className="embla flex-1 bg-base-200 shadow-2xl rounded-xl overflow-hidden flex "
+            className="embla flex-1 bg-base-200 rounded-xl overflow-hidden flex "
             ref={emblaRef}
           >
             <div className="embla__container flex-1">

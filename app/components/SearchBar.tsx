@@ -37,7 +37,7 @@ export default function SearchBar() {
           className="input input-primary join-item flex-1"
           placeholder="Search"
         />
-        <button type="submit" className="btn btn-primary join-item">
+        <button type="submit" className="btn btn-primary btn-soft join-item">
           <SearchIcon className="size-5" />
         </button>
       </form>

@@ -42,9 +42,17 @@ export default function Trending() {
 
   if (query.isError) {
     return (
-      <div className="container mx-auto">
+      <div className="container mx-auto mt-8 h-[520px]">
         <div className="alert alert-error">
           <span>Error loading trending anime.</span>
+          <div
+            className="btn btn-primary btn-soft"
+            onClick={() => {
+              query.refetch();
+            }}
+          >
+            Reload
+          </div>
         </div>
       </div>
     );
