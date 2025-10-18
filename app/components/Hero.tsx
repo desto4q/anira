@@ -20,7 +20,6 @@ interface RESULTS extends API_RESULTS<SPOTLIGHT_RESULT> {}
 
 export default function Hero() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const query = useQuery<RESULTS>({
     queryKey: ["top-airing"],
@@ -32,26 +31,6 @@ export default function Hero() {
   });
 
   const trending_items = query.data?.results;
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
-    },
-    [emblaApi],
-  );
 
   // useEffect(() => {
   //   if (!emblaApi) return;
@@ -89,7 +68,6 @@ export default function Hero() {
       </div>
     );
   }
-  const current_item = trending_items[selectedIndex];
 
   return (
     <div className=" flex px-3 md:px-0  h-[calc(100dvh-80px)]">
@@ -130,7 +108,7 @@ export default function Hero() {
                         alt=""
                       />
                     </div>
-                    <div className="absolute bottom-0 h-1/2 md:h-full w-full md:max-w-3xl pb-12 bg-gradient-to-t via-base-200 from-base-200 p-4 space-y-3 md:space-y-6 md:pl-12 grid place-content-end-safe via-70% md:bg-gradient-to-r">
+                    <div className="absolute bottom-0 h-1/2 md:h-full w-full md:max-w-3xl pb-12 bg-gradient-to-t via-base-200/50 from-base-200 p-4 space-y-3 md:space-y-6 md:pl-12 grid place-content-end-safe via-70% md:bg-gradient-to-r">
                       <p className="text-sm md:text-xl font-bold text-primary">
                         Spotlight #{item.rank}
                       </p>
