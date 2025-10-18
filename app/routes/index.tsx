@@ -13,9 +13,10 @@ export const meta: MetaFunction = () => {
 };
 export default function index() {
   return (
-    <div>
+    <>
+      <h1 className="Hidden">Welcome to Anira</h1>
       <ClientOnly>{() => <Hero />}</ClientOnly>
       <Trending />
-    </div>
+    </>
   );
 }
