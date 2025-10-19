@@ -1,7 +1,7 @@
 export default function TvSkeleton() {
   return (
     <>
-      <div className="h-[250px] bg-base-200 relative skeleton">
+      <div className="h-[150px] bg-base-200 relative skeleton">
         {/*<img
         src={tv_data?.image}
         className="size-full object-cover"
