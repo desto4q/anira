@@ -1,3 +1,4 @@
+import { pb } from "@/api/pocketbase";
 import { useUser } from "@/helpers/hooks";
 import { Link } from "react-router";
 
@@ -25,10 +26,18 @@ export default function AuthButtons() {
         className="dropdown-content ring ring-current/20  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-lg"
       >
         <li>
-          <a>Profile</a>
+          <Link to={"/profile"} viewTransition>
+            Profile
+          </Link>
         </li>
         <li>
-          <a>Item 2</a>
+          <button
+            onClick={() => {
+              pb.authStore.clear();
+            }}
+          >
+            Logout
+          </button>
         </li>
       </ul>
     </span>

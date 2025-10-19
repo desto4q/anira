@@ -17,27 +17,16 @@ export default function index({}: SignupProps) {
   const { register, handleSubmit } = form;
   const onSubmit = handleSubmit(
     async (data) => {
-      const record_id = generateId();
-      const batch = pb.createBatch();
-      batch.collection("users").create({
-        ...data,
-        username: null,
-        id: record_id,
-      });
-      batch.collection("usernames").create({
-        username: "test",
-        id: record_id,
-        user: record_id,
-      });
-
       toast.promise(
         () => {
-          return batch.send();
+          return pb.collection("users").create({
+            ...data,
+          });
         },
         {
           success: () => {
-            // nav("/auth/login");
-            return "Account Created Check Email For OTP";
+            nav("/");
+            return "Account Created";
           },
           error: extract_pb_error,
           loading: "creating user",
