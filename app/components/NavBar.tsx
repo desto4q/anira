@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import { MenuIcon } from "lucide-react";
 import MainDrawerMenu from "./MainDrawerMenu";
 import { Suspense } from "react";
+import AuthButtons from "./AuthButtons";
 
 export default function NavBar() {
   return (
@@ -24,13 +25,14 @@ export default function NavBar() {
         <div className="ml-auto md:ml-0">
           <SearchBar />
         </div>
-        <div className="ml-auto space-x-4 hidden md:block">
+        <div className="ml-auto space-x-4 hidden md:flex ">
           <Link to={"/category/movies"} className="btn btn-neutral">
             Movies
           </Link>
           <Link to={"/category/Tv"} className="btn btn-neutral">
             Tv
           </Link>
+          <AuthButtons />
           {/*<Link to={"/auth/login"} className="btn btn-primary">
             Login
           </Link>*/}

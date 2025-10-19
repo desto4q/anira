@@ -1,3 +1,4 @@
+import { pb } from "@/api/pocketbase";
 import Hero from "@/components/Hero";
 import Trending from "@/components/Trending";
 import type { MetaFunction } from "react-router";

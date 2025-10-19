@@ -1,9 +1,11 @@
-import { atom, useAtom } from "jotai";
+import { atom, getDefaultStore, useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import { atomWithStorage } from "jotai/utils";
 import Cookies from "js-cookie"; // 👈 install with: npm i js-cookie
-
+import { pb } from "@/api/pocketbase";
+import { BaseAuthStore, type RecordModel } from "pocketbase";
+import * as lod from "lodash";
 export const usePagination = (totalPages?: number) => {
   const [internalTotalPages, setInternalTotal] = useState(totalPages || 10);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -81,3 +83,25 @@ export const useModal = () => {
   };
   return [ref, modalOptions] as const;
 };
+
+export const user_atom = atomWithStorage<RecordModel | null>("auth", null);
+
+export const useUser = () => {
+  const [user, setUser] = useAtom<RecordModel | null>(user_atom);
+
+  return [user, setUser] as const;
+};
+const user_Store = getDefaultStore();
+user_Store.get(user_atom);
+pb.authStore.onChange(() => {
+  const currentUser = user_Store.get(user_atom); // get current value
+  if (pb.authStore.isValid) {
+    if (!lod.isEqual(currentUser, pb.authStore.record)) {
+      user_Store.set(user_atom, pb.authStore.record);
+    }
+  } else {
+    if (currentUser !== null) {
+      user_Store.set(user_atom, null);
+    }
+  }
+});

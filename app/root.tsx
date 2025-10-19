@@ -15,6 +15,9 @@ import NavBar from "./components/NavBar";
 import AppLayout from "./components/layouts/AppLayout";
 import Footer from "./components/Footer";
 import DonationDialog from "./components/DonationDialog";
+import { useUser } from "./helpers/hooks";
+import { useEffect } from "react";
+import { pb } from "./api/pocketbase";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -63,6 +66,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const [user, setUser] = useUser();
+  useEffect(() => {
+    if (!user) return;
+    pb.collection("users").subscribe(user?.id, ({ record, action }) => {
+      if (action == "update") {
+        console.log(record, action);
+        return pb.collection("users").authRefresh();
+      }
+    });
+
+    return () => {
+      pb.collection("users").unsubscribe();
+    };
+  }, [user]);
+
   return <Outlet />;
 }
 

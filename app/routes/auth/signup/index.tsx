@@ -36,7 +36,7 @@ export default function index({}: SignupProps) {
         },
         {
           success: () => {
-            nav("/auth/login");
+            // nav("/auth/login");
             return "Account Created Check Email For OTP";
           },
           error: extract_pb_error,
