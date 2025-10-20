@@ -9,9 +9,17 @@ import TvDetails from "../../../_components/TvDetails";
 import SimplePlayer from "@/components/VideoPlayer.client";
 import { useParams } from "react-router";
 import { ClientOnly } from "remix-utils/client-only";
+import { useTimer } from "use-timer";
+import { useEffect } from "react";
+import { pb } from "@/api/pocketbase";
+import type { HistoryModel } from "@/helpers/types";
+import { useUser } from "@/helpers/hooks";
+import { toast } from "sonner";
 
 export default function index() {
   const { id, episode, number } = useParams();
+  const [user] = useUser();
+
   const query = useQuery<TV_INFO_INTERFACE>({
     queryKey: [id],
     queryFn: async () => {
@@ -23,6 +31,7 @@ export default function index() {
       return resp.data;
     },
   });
+
   if (query.isLoading) return <TvWatchSkeleton />;
 
   const tv_data = query.data;
@@ -44,7 +53,7 @@ export default function index() {
               height="100%"
             ></iframe>*/}
           </div>
-          <TvEpisodesList episodes={tv_data.episodes} />
+          <TvEpisodesList episodes={tv_data.episodes || []} />
           <TvDetails info={tv_data} />
         </div>
         <div className="flex-1 hidden lg:block max-w-xs bg-base-200">

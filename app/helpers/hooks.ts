@@ -83,11 +83,15 @@ export const useModal = () => {
   };
   return [ref, modalOptions] as const;
 };
+interface UserModel extends RecordModel {
+  username: string;
+  email: string;
+}
 
-export const user_atom = atomWithStorage<RecordModel | null>("auth", null);
+export const user_atom = atomWithStorage<UserModel | null>("auth", null);
 
 export const useUser = () => {
-  const [user, setUser] = useAtom<RecordModel | null>(user_atom);
+  const [user, setUser] = useAtom<UserModel | null>(user_atom);
 
   return [user, setUser] as const;
 };
@@ -97,7 +101,7 @@ pb.authStore.onChange(() => {
   const currentUser = user_Store.get(user_atom); // get current value
   if (pb.authStore.isValid) {
     if (!lod.isEqual(currentUser, pb.authStore.record)) {
-      user_Store.set(user_atom, pb.authStore.record);
+      user_Store.set(user_atom, pb.authStore.record as UserModel);
     }
   } else {
     if (currentUser !== null) {

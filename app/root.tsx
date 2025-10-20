@@ -74,6 +74,7 @@ export default function App() {
         console.log(record, action);
         return pb.collection("users").authRefresh();
       }
+      return;
     });
 
     return () => {
