@@ -21,7 +21,7 @@ const footer_links = [
 
 export default function Footer() {
   return (
-    <div className="bg-base-200  py-12 z-10">
+    <div className="bg-base-200  py-12 z-10 mt-4">
       <div className="container my-auto mx-auto space-y-4">
         <div className="flex items-center">
           <span className="text-3xl font-bold">Anira</span>
