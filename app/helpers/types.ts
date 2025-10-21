@@ -11,6 +11,15 @@ export interface HistoryModel extends RecordModel {
   title: string;
 }
 
+export interface BookmarkModel extends RecordModel {
+  url: string;
+  tv_id: string;
+  id: string;
+  img: string;
+  user_id: string;
+  title: string;
+}
+
 export interface WatchHistory extends RecordModel {
   created: string;
   episode_id: string;

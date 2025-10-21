@@ -67,20 +67,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const [user, setUser] = useUser();
-  useEffect(() => {
-    if (!user) return;
-    pb.collection("users").subscribe(user?.id, ({ record, action }) => {
-      if (action == "update") {
-        console.log(record, action);
-        return pb.collection("users").authRefresh();
-      }
-      return;
-    });
+  // useEffect(() => {
+  //   if (!user) return;
+  //   pb.collection("users").subscribe(user?.id, ({ record, action }) => {
+  //     if (action == "update") {
+  //       console.log(record, action);
+  //       return pb.collection("users").authRefresh();
+  //     }
+  //     return;
+  //   });
 
-    return () => {
-      pb.collection("users").unsubscribe();
-    };
-  }, [user]);
+  //   return () => {
+  //     pb.collection("users").unsubscribe();
+  //   };
+  // }, [user]);
 
   return <Outlet />;
 }

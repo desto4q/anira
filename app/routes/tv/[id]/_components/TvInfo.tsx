@@ -4,8 +4,42 @@ import TvRecommendations from "./Recommendations";
 import TvEpisodesList from "./TvEpisodesList";
 import TvRelatedShows from "./TvRelatedShows";
 import { toast } from "sonner";
+import { pb } from "@/api/pocketbase";
+import { useUser } from "@/helpers/hooks";
+import { ClientResponseError } from "pocketbase";
+import { useMutation } from "@tanstack/react-query";
 
 export default function TvInfo({ info }: { info: TV_INFO_INTERFACE }) {
+  const str = info.id;
+  const match = str.match(/-(\d+)$/)?.[1] ?? "";
+  const [user] = useUser();
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("User not logged in");
+      const new_id = user.id + match;
+      let resp = await pb
+        .collection("bookmarks")
+        .getOne(new_id)
+        .catch((err) => {
+          if (err instanceof ClientResponseError) {
+            if (err.status === 404) {
+              return;
+            }
+            throw err;
+          }
+        });
+      if (resp) return;
+      await pb.collection("bookmarks").create({
+        id: new_id,
+        user_id: user.id,
+        title: info.title,
+        tv_id: info.id,
+        img: info.image,
+      });
+    },
+    onSuccess: () => {},
+    onError: (error) => {},
+  });
   return (
     <div className="container mx-auto flex gap-2 min-h-dvh">
       <div className="flex-1 bg-gradient-to-t ">
@@ -18,8 +52,12 @@ export default function TvInfo({ info }: { info: TV_INFO_INTERFACE }) {
             />
             <button
               className="btn btn-block mt-4 btn-primary"
-              onClick={() => {
-                return toast.info("Coming Soon");
+              onClick={async () => {
+                toast.promise(mutation.mutateAsync(), {
+                  loading: "Adding bookmark...",
+                  error: "Failed to add bookmark",
+                  success: "Bookmark added",
+                });
               }}
             >
               <Bookmark /> Bookmark

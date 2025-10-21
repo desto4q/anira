@@ -21,10 +21,11 @@ export default function GridContainer(props: GridContainerProps) {
           </div>
         )}
       </div>
-      <section className="mt-4 grid grid-cols-[repeat(auto-fit,150px)]  md:grid-cols-[repeat(auto-fit,250px)] gap-2">
+      <section className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
         {props.children}
       </section>
-      <div className="mt-8 mb-20 grid place-items-center z-20">
+
+      <div className="mt-8 mb-12 grid place-items-center z-20">
         <SimplePaginator totalPage={props.totalPages} />
       </div>
     </div>

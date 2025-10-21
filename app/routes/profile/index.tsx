@@ -3,6 +3,7 @@ import { useUser } from "@/helpers/hooks";
 import { useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router";
 import WatchHistory from "./_components.tsx/WatchHistory";
+import Bookmarks from "./_components.tsx/BookMarks";
 
 export default function index() {
   const [user] = useUser();
@@ -42,7 +43,7 @@ export default function index() {
         <section className="mt-6 bg-base-200 p-4 rounded-lg">
           <h2 className="text-2xl font-bold">BookMarks</h2>
           <div className="p-4 bg-base-100 ring ring-current/20 mt-4 rounded-lg">
-            Coming Soong
+            <Bookmarks />
           </div>
         </section>
       </div>
