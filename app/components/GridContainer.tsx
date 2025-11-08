@@ -6,6 +6,7 @@ interface GridContainerProps {
   title?: string;
   searchBar?: boolean;
   totalPages?: number;
+  disablePaginate?: boolean;
 }
 
 export default function GridContainer(props: GridContainerProps) {
@@ -25,9 +26,11 @@ export default function GridContainer(props: GridContainerProps) {
         {props.children}
       </section>
 
-      <div className="mt-8 mb-12 grid place-items-center z-20">
-        <SimplePaginator totalPage={props.totalPages} />
-      </div>
+      {!props.disablePaginate && (
+        <div className="mt-8 mb-12 grid place-items-center z-20">
+          <SimplePaginator totalPage={props.totalPages} />
+        </div>
+      )}
     </div>
   );
 }

@@ -109,3 +109,12 @@ pb.authStore.onChange(() => {
     }
   }
 });
+
+export const useInternalPagination = () => {
+  const [page, setPage] = useState<number>(1);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
+  return { currentPage: page, handlePageChange } as const;
+};

@@ -32,6 +32,11 @@ export default function AppDrawer() {
                   Tv
                 </Link>
               </li>
+              <li>
+                <Link onClick={onClick} to={"/profile"} className="">
+                  Profile
+                </Link>
+              </li>
             </ul>
           </li>
         </ul>
